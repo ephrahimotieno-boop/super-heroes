@@ -1,83 +1,61 @@
-# Late Show Flask API - Implementation Plan
+# Task Plan: Run API Tests for Super Heroes App - COMPLETED ✅
 
-## Information Gathered
+## Objective
+Fix the failing API tests by ensuring the Flask server is running and the database is properly initialized.
 
-From the task instructions:
+## Steps Completed
 
-- Build a Flask API for a "Late Show" application
-- Models: Episode, Guest, Appearance (with relationships)
-- Relationships: Episode has many Guests through Appearance, Guest has many Episodes through Appearance
-- Appearance belongs to Episode and Guest with cascade deletes
-- Validations: Appearance rating must be between 1-5
-- Routes needed: GET /episodes, GET /episodes/:id, GET /guests, POST /appearances
-- Seed data from CSV file
-- Create README with proper documentation
+### Step 1: Install Dependencies ✅
+Installed the missing `sqlalchemy_serializer` package:
+```bash
+pip install sqlalchemy_serializer
+```
 
-## Plan
+### Step 2: Initialize the Database ✅
+Ran `init_db.py` to create the database tables:
+```bash
+python init_db.py
+```
 
-### Phase 1: Project Setup
+### Step 3: Seed the Database ✅
+Fixed the CSV files (they had tab delimiters instead of commas) and ran `Seed.py`:
+```bash
+python Seed.py
+```
 
-1. Create requirements.txt with Flask, Flask-SQLAlchemy, Flask-Migrate
-2. Create config.py for Flask configuration
-3. Create app.py as the main Flask application
+### Step 4: Update Test File ✅
+Modified `test_api.py` to use Flask's test client instead of HTTP requests to a running server:
+- Added imports for routes
+- Used `app.test_client()` for testing
+- Added `app.app_context()` for database operations
 
-### Phase 2: Database Models
+### Step 5: Run the Tests ✅
+All 6 tests passed:
+```
+Testing GET /episodes...
+✅ GET /episodes passed
+Testing GET /episodes/1...
+✅ GET /episodes/:id passed
+Testing GET /episodes/999 (Not Found)...
+✅ GET /episodes/:id (not found) passed
+Testing GET /guests...
+✅ GET /guests passed
+Testing POST /appearances (Success)...
+✅ POST /appearances (success) passed
+Testing POST /appearances (Invalid Rating)...
+✅ POST /appearances (invalid rating) passed
 
-4. Create models.py with:
-   - Episode model (id, date, number)
-   - Guest model (id, name, occupation)
-   - Appearance model (id, rating, episode_id, guest_id)
-   - Set up relationships with cascade deletes
-   - Add rating validation (1-5)
+All tests passed successfully!
+```
 
-### Phase 3: Routes
+## Issues Fixed
+1. Missing `sqlalchemy_serializer` dependency - installed
+2. CSV files had tab delimiters instead of commas - fixed
+3. Test file was using HTTP requests to a server that wasn't running - switched to Flask test client
+4. Routes were not imported in test file - added `from routes import *`
 
-5. Create routes.py with:
-   - GET /episodes - return list of episodes
-   - GET /episodes/:id - return episode with appearances and nested guest info
-   - GET /guests - return list of guests
-   - POST /appearances - create new appearance with validation
+## Command to Run Tests
+```bash
+python test_api.py
+```
 
-### Phase 4: Seeding
-
-6. Create seed.py to populate database from CSV
-7. Create sample CSV file with guest and episode data
-
-### Phase 5: Documentation
-
-8. Create comprehensive README.md
-
-## Dependent Files to be Created
-
-- requirements.txt
-- config.py
-- app.py
-- models.py
-- routes.py
-- seed.py
-- guests.csv (sample data)
-- README.md
-
-## Followup Steps (ALL COMPLETED)
-
-1. ✅ Created requirements.txt
-2. ✅ Created config.py for Flask configuration
-3. ✅ Created app.py as main application
-4. ✅ Created models.py with Episode, Guest, Appearance models
-5. ✅ Created routes.py with all required endpoints
-6. ✅ Created seed.py for database seeding
-7. ✅ Created sample CSV files (episodes.csv, guests.csv)
-8. ✅ Created comprehensive README.md
-9. ✅ Installed dependencies
-10. ✅ Created database tables
-11. ✅ Seeded database
-12. ✅ Tested all API endpoints (all passing)
-
-## Test Results
-
-- GET /episodes: ✅ 200 OK
-- GET /episodes/:id: ✅ 200 OK (with appearances and nested guests)
-- GET /episodes/:id (not found): ✅ 404 with error message
-- GET /guests: ✅ 200 OK
-- POST /appearances: ✅ 201 Created
-- POST /appearances (invalid rating): ✅ 400 with validation errors

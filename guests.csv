@@ -1,4 +1,7 @@
-name	occupation
-Michael J. Fox	actor
-Sandra Bernhard	Comedian
-Tracey Ullman	television actress
+name,occupation
+Michael J. Fox,actor
+Sandra Bernhard,Comedian
+Tracey Ullman,television actress
+Gillian Anderson,film actress
+David Duchovny,television actor
+
